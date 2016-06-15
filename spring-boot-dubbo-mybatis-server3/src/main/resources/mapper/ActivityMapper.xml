@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bing.mapper.ActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.bing.activity.api.domain.Activity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="activity_id" property="activityId" jdbcType="INTEGER" />
+    <result column="client_ip" property="clientIp" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="id_number" property="idNumber" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+    <result column="purchase_time" property="purchaseTime" jdbcType="TIMESTAMP" />
+    <result column="request_str" property="requestStr" jdbcType="LONGVARCHAR" />
+    <result column="response_str" property="responseStr" jdbcType="LONGVARCHAR" />
+    <result column="start_date" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, activity_id, client_ip, email, id_number, name, order_id, phone_num, purchase_time, 
+    request_str, response_str, start_date, status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bing.domain.ActivityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from activity_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from activity_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bing.domain.ActivityExample" >
+    delete from activity_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bing.activity.api.domain.Activity" useGeneratedKeys="true" keyProperty="id" >
+    insert into activity_log (activity_id, client_ip, email, 
+      id_number, name, order_id, 
+      phone_num, purchase_time, request_str, 
+      response_str, start_date, status
+      )
+    values (#{activityId,jdbcType=INTEGER}, #{clientIp,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{idNumber,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, 
+      #{phoneNum,jdbcType=VARCHAR}, #{purchaseTime,jdbcType=TIMESTAMP}, #{requestStr,jdbcType=LONGVARCHAR}, 
+      #{responseStr,jdbcType=LONGVARCHAR}, #{startDate,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bing.activity.api.domain.Activity" useGeneratedKeys="true" keyProperty="id" >
+    insert into activity_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="clientIp != null" >
+        client_ip,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="idNumber != null" >
+        id_number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="phoneNum != null" >
+        phone_num,
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time,
+      </if>
+      <if test="requestStr != null" >
+        request_str,
+      </if>
+      <if test="responseStr != null" >
+        response_str,
+      </if>
+      <if test="startDate != null" >
+        start_date,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="activityId != null" >
+        #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="clientIp != null" >
+        #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseTime != null" >
+        #{purchaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestStr != null" >
+        #{requestStr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseStr != null" >
+        #{responseStr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bing.domain.ActivityExample" resultType="java.lang.Integer" >
+    select count(*) from activity_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update activity_log
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.activityId != null" >
+        activity_id = #{record.activityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.clientIp != null" >
+        client_ip = #{record.clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNumber != null" >
+        id_number = #{record.idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNum != null" >
+        phone_num = #{record.phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchaseTime != null" >
+        purchase_time = #{record.purchaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.requestStr != null" >
+        request_str = #{record.requestStr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.responseStr != null" >
+        response_str = #{record.responseStr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.startDate != null" >
+        start_date = #{record.startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update activity_log
+    set id = #{record.id,jdbcType=BIGINT},
+      activity_id = #{record.activityId,jdbcType=INTEGER},
+      client_ip = #{record.clientIp,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      id_number = #{record.idNumber,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=VARCHAR},
+      phone_num = #{record.phoneNum,jdbcType=VARCHAR},
+      purchase_time = #{record.purchaseTime,jdbcType=TIMESTAMP},
+      request_str = #{record.requestStr,jdbcType=LONGVARCHAR},
+      response_str = #{record.responseStr,jdbcType=LONGVARCHAR},
+      start_date = #{record.startDate,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bing.activity.api.domain.Activity" >
+    update activity_log
+    <set >
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=INTEGER},
+      </if>
+      <if test="clientIp != null" >
+        client_ip = #{clientIp,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="idNumber != null" >
+        id_number = #{idNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        phone_num = #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time = #{purchaseTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestStr != null" >
+        request_str = #{requestStr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="responseStr != null" >
+        response_str = #{responseStr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="startDate != null" >
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bing.activity.api.domain.Activity" >
+    update activity_log
+    set activity_id = #{activityId,jdbcType=INTEGER},
+      client_ip = #{clientIp,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      id_number = #{idNumber,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      phone_num = #{phoneNum,jdbcType=VARCHAR},
+      purchase_time = #{purchaseTime,jdbcType=TIMESTAMP},
+      request_str = #{requestStr,jdbcType=LONGVARCHAR},
+      response_str = #{responseStr,jdbcType=LONGVARCHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
