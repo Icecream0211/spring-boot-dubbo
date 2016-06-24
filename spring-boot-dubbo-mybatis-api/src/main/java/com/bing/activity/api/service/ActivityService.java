@@ -8,4 +8,5 @@ public interface ActivityService {
 	public List<Activity> getActivitysByEmail(String email,int startpage,int pagesize);
 	public boolean insertActivity(Activity act);
 	public boolean insertActivity2(Activity act);
+	public void cleancache();
 }

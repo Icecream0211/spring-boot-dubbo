@@ -2,6 +2,7 @@ package com.bing.serviceimpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,6 +33,7 @@ public class ActivityServiceImpl implements ActivityService {
 	
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED,isolation=Isolation.READ_COMMITTED)
+	@Cacheable(cacheNames = "activeityemail", key = "#email+#startpage+#pagesize")
 	public List<Activity> getActivitysByEmail(String email, int startpage, int pagesize) {
 		if(StringUtils.isEmpty(email)){
 			throw new RuntimeException("email不能为空");
@@ -55,5 +57,9 @@ public class ActivityServiceImpl implements ActivityService {
 	@Override
 	public boolean insertActivity2(Activity act) {
 		throw new RuntimeException("插入异常");
+	}
+	@Override
+	public void cleancache() {
+		
 	}
 }

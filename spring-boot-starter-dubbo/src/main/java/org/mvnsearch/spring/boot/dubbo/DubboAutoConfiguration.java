@@ -1,16 +1,16 @@
 package org.mvnsearch.spring.boot.dubbo;
 
-import com.alibaba.dubbo.config.ApplicationConfig;
-import com.alibaba.dubbo.config.ConsumerConfig;
-import com.alibaba.dubbo.config.MonitorConfig;
-import com.alibaba.dubbo.config.ProtocolConfig;
-import com.alibaba.dubbo.config.ProviderConfig;
-import com.alibaba.dubbo.config.RegistryConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.alibaba.dubbo.config.ApplicationConfig;
+import com.alibaba.dubbo.config.ConsumerConfig;
+import com.alibaba.dubbo.config.ProtocolConfig;
+import com.alibaba.dubbo.config.ProviderConfig;
+import com.alibaba.dubbo.config.RegistryConfig;
 
 /**
  * dubbo auto configuration
@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
  * @author Bing
  */
 @Configuration
-@EnableConfigurationProperties({DubboProperties.class,DubboConsumerProperties.class,DubboProviderProperties.class})
+@EnableConfigurationProperties({DubboProperties.class,DubboConsumerProperties.class,DubboProviderProperties.class,DubboRegistryProperties.class})
 public class DubboAutoConfiguration {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
@@ -32,6 +32,9 @@ public class DubboAutoConfiguration {
     
     @Autowired
     private DubboConsumerProperties consumerProperties;
+    
+    @Autowired
+    private DubboRegistryProperties registryProperties;
     
     
     @Bean
@@ -91,6 +94,53 @@ public class DubboAutoConfiguration {
     @ConditionalOnMissingBean
     public RegistryConfig dubboRegistryConfig() {
         RegistryConfig registryConfig = new RegistryConfig();
+        if(this.registryProperties!=null){
+        	if(registryProperties.getId()!=null&&registryProperties.getId().trim().length()!=0){
+        		registryConfig.setId(registryProperties.getId());
+        	}
+        	if(registryProperties.getAddress()!=null&&registryProperties.getAddress().trim().length()!=0){
+        		registryConfig.setAddress(registryProperties.getAddress());
+        	}
+        	if(registryProperties.getFile()!=null&&registryProperties.getFile().trim().length()!=0){
+        		registryConfig.setFile(registryProperties.getFile());
+        	}
+        	if(registryProperties.getPassword()!=null&&registryProperties.getPassword().trim().length()!=0){
+        		registryConfig.setPassword(registryProperties.getPassword());
+        	}
+        	if(registryProperties.getUsername()!=null&&registryProperties.getUsername().trim().length()!=0){
+        		registryConfig.setUsername(registryProperties.getUsername());
+        	}
+        	if(registryProperties.getProtocol()!=null&&registryProperties.getProtocol().trim().length()!=0){
+        		registryConfig.setProtocol(registryProperties.getProtocol());
+        	}
+        	if(registryProperties.getTransport()!=null&&registryProperties.getTransport().trim().length()!=0){
+        		registryConfig.setTransporter(registryProperties.getTransport());
+        	}
+        	
+        	if(registryProperties.getCheck()!=null){
+        		registryConfig.setCheck(registryProperties.getCheck());
+        	}
+        	if(registryProperties.getDynamic()!=null){
+        		registryConfig.setDynamic(registryProperties.getDynamic());
+        	}
+        	if(registryProperties.getRegister()!=null){
+        		registryConfig.setRegister(registryProperties.getRegister());
+        	}
+        	
+        	if(registryProperties.getSubscribe()!=null){
+        		registryConfig.setSubscribe(registryProperties.getSubscribe());
+        	}
+        	
+        	if(registryProperties.getPort()!=null){
+        		registryConfig.setPort(registryProperties.getPort());
+        	}
+        	if(registryProperties.getSession()!=null){
+        		registryConfig.setSession(registryProperties.getSession());
+        	}
+        	if(registryProperties.getTimeout()!=null){
+        		registryConfig.setTimeout(registryProperties.getTimeout());
+        	}
+        }
         registryConfig.setAddress(properties.getRegistry());
         return registryConfig;
     }

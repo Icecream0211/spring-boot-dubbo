@@ -6,11 +6,11 @@ import java.util.Date;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
 public class Activity implements Serializable {
     private Long id;
-
     private Integer activityId;
-
     private String clientIp;
 
     private String email;

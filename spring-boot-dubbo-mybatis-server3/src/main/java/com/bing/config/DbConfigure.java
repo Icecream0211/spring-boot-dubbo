@@ -16,6 +16,8 @@ import com.alibaba.druid.pool.DruidDataSource;
 @ConfigurationProperties
 public class DbConfigure {
 	Logger log = LoggerFactory.getLogger(DbConfigure.class);
+	@Value("${spring.profiles.active}")
+	private String envStr;
 	@Bean
 	public DataSource dataSourceDruid(@Value("${spring.datasource.driver-class-name}") String driver,
 			@Value("${spring.datasource.url}") String url, @Value("${spring.datasource.username}") String username,
@@ -31,6 +33,11 @@ public class DbConfigure {
 		log.info(password);
 		try {
 			druidDataSource.setFilters("stat, wall");
+			System.out.println(envStr+"<------>" + envStr);
+			System.out.println(envStr+"<------>" + envStr);
+			System.out.println(envStr+"<------>" + envStr);
+			System.out.println(envStr+"<------>" + envStr);
+			System.out.println(envStr+"<------>" + envStr);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -39,6 +39,11 @@ public class TestController {
 		exam.createCriteria().andEmailEqualTo("icecream0211@gmail.com");
 		return activityMapper.selectByExample(exam);
 	}
+	@RequestMapping("/clean")
+	public String clean(@RequestParam String name) {
+		activityService.cleancache();
+		return "success";
+	}
 	
 	@RequestMapping("/add")
 	public List<Activity> addAct() {

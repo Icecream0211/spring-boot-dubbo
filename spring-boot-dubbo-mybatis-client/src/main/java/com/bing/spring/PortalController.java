@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.dubbo.config.annotation.DubboConsumer;
 import com.bing.activity.api.domain.Activity;
 import com.bing.activity.api.service.ActivityService;
+import com.wordnik.swagger.annotations.ApiParam;
 
 /**
  * portal controller
